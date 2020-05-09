@@ -35,6 +35,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ProfileComponent } from './profile/profile.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const appRoutes: Routes = [
   {
@@ -62,18 +63,19 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    ProfileComponent,
-    MessagesComponent,
-    LoginComponent,
-  ],
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        ProfileComponent,
+        MessagesComponent,
+        LoginComponent,
+    ],
   imports: [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     OktaAuthModule,
+    NgbModule,
   ],
   providers: [
     { provide: OKTA_CONFIG, useValue: oktaConfig },
