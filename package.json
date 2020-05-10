@@ -29,6 +29,8 @@
     "colors": "^1.1.2",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
+    "primeicons": "^3.0.0-rc.1",
+    "primeng": "^9.0.6",
     "rxjs": "^6.5.5",
     "semantic-ui-css": "^2.2.12",
     "tslib": "^1.10.0",
