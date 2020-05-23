@@ -1,19 +1,16 @@
-<!--The content below is only a placeholder and can be replaced.-->
+<link href="node_modules/@angular/material/prebuilt-themes/indigo-pink.css" rel="stylesheet">
 
-<div class="ui inverted top fixed menu">
-  <div class="ui container">
-    <a routerLink="/" class="header item">
-      <img class="ui mini image" src="/assets/angular.svg">
-      &nbsp;
-      Okta-Angular Sample Project
-    </a>
-    <a class="item" *ngIf="!isAuthenticated" routerLink="/login">Login</a>
-    <a id="messages-button" class="item" routerLink="/messages"><i aria-hidden="true" class="mail outline icon"></i>Messages</a>
-    <a id="profile-button" class="item" routerLink="/profile">Profile</a>
-    <a id="logout-button" class="item" *ngIf="isAuthenticated" (click)="logout()">Logout</a>
-  </div>
-</div>
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="side" [(opened)]="sidenavStatus">
+    <app-sidenav [isAuthenticated]="isAuthenticated"></app-sidenav>
+  </mat-sidenav>
 
-<div class="ui text container" style="margin-top: 7em;">
-  <router-outlet></router-outlet>
-</div>
+  <mat-sidenav-content>
+    <mat-toolbar #toolbar>
+      <app-header [isAuthenticated]="isAuthenticated" [(sidenavStatus)]="sidenavStatus" style="inline-size: inherit"></app-header>
+    </mat-toolbar>
+    <div id="main-content" class="ui text container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
