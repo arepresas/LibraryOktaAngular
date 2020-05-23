@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+.mat-drawer-inner-container {
+  overflow: unset !important;
+}
+
+mat-sidenav {
+  overflow-y: unset !important;
+}

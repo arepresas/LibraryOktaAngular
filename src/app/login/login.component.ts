@@ -10,17 +10,16 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
-import * as OktaSignIn from '@okta/okta-signin-widget';
-import sampleConfig from '../app.config';
-
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import * as OktaSignIn from "@okta/okta-signin-widget";
+import sampleConfig from "../app.config";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   signIn: any;
   constructor() {
     this.signIn = new OktaSignIn({
@@ -29,20 +28,20 @@ export class LoginComponent implements OnInit {
        * needs to be configured with the base URL for your Okta Org. Here
        * we derive it from the given issuer for convenience.
        */
-      baseUrl: sampleConfig.oidc.issuer.split('/oauth2')[0],
+      baseUrl: sampleConfig.oidc.issuer.split("/oauth2")[0],
       clientId: sampleConfig.oidc.clientId,
       redirectUri: sampleConfig.oidc.redirectUri,
-      logo: '/assets/angular.svg',
+      logo: "/assets/angular.svg",
       i18n: {
         en: {
-          'primaryauth.title': 'Sign in to Angular & Company',
+          "primaryauth.title": "Sign in to Angular & Company",
         },
       },
       authParams: {
         pkce: true,
-        responseMode: 'query',
+        responseMode: "query",
         issuer: sampleConfig.oidc.issuer,
-        display: 'page',
+        display: "page",
         scopes: sampleConfig.oidc.scopes,
       },
     });
@@ -50,7 +49,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.signIn.renderEl(
-      { el: '#sign-in-widget' },
+      { el: "#sign-in-widget" },
       () => {
         /**
          * In this flow, the success handler will not be called because we redirect
@@ -59,8 +58,11 @@ export class LoginComponent implements OnInit {
       },
       (err) => {
         throw err;
-      },
+      }
     );
   }
 
+  ngOnDestroy(): void {
+    this.signIn.remove();
+  }
 }

@@ -10,76 +10,92 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { Routes, RouterModule } from '@angular/router';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { HttpClientModule } from "@angular/common/http";
+import { Routes, RouterModule } from "@angular/router";
 import {
   OKTA_CONFIG,
   OktaAuthGuard,
   OktaAuthModule,
   OktaCallbackComponent,
-} from '@okta/okta-angular';
+} from "@okta/okta-angular";
 
-import sampleConfig from './app.config';
+import sampleConfig from "./app.config";
 
-const oktaConfig = Object.assign({
-  onAuthRequired: ({oktaAuth, router}) => {
-    // Redirect the user to your custom login page
-    router.navigate(['/login']);
-  }
-}, sampleConfig.oidc);
+const oktaConfig = Object.assign(
+  {
+    onAuthRequired: ({ oktaAuth, router }) => {
+      // Redirect the user to your custom login page
+      router.navigate(["/login"]);
+    },
+  },
+  sampleConfig.oidc
+);
 
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { MessagesComponent } from './messages/messages.component';
-import { ProfileComponent } from './profile/profile.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { AppComponent } from "./app.component";
+import { HomeComponent } from "./home/home.component";
+import { LoginComponent } from "./login/login.component";
+import { MessagesComponent } from "./messages/messages.component";
+import { ProfileComponent } from "./profile/profile.component";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatIconModule } from "@angular/material/icon";
+import { MatDividerModule } from "@angular/material/divider";
+import { ButtonModule } from "primeng/button";
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { HeaderComponent } from './header/header.component';
 const appRoutes: Routes = [
   {
-    path: '',
+    path: "",
     component: HomeComponent,
   },
   {
-    path: 'implicit/callback',
+    path: "implicit/callback",
     component: OktaCallbackComponent,
   },
   {
-    path: 'login',
+    path: "login",
     component: LoginComponent,
   },
   {
-    path: 'profile',
+    path: "profile",
     component: ProfileComponent,
-    canActivate: [ OktaAuthGuard ],
+    canActivate: [OktaAuthGuard],
   },
   {
-    path: 'messages',
+    path: "messages",
     component: MessagesComponent,
-    canActivate: [ OktaAuthGuard ],
+    canActivate: [OktaAuthGuard],
   },
 ];
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        HomeComponent,
-        ProfileComponent,
-        MessagesComponent,
-        LoginComponent,
-    ],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    ProfileComponent,
+    MessagesComponent,
+    LoginComponent,
+    SidenavComponent,
+    HeaderComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     OktaAuthModule,
     NgbModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatDividerModule,
+    ButtonModule,
   ],
-  providers: [
-    { provide: OKTA_CONFIG, useValue: oktaConfig },
-  ],
+  providers: [{ provide: OKTA_CONFIG, useValue: oktaConfig }],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

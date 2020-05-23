@@ -10,25 +10,32 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { OktaAuthService } from '@okta/okta-angular';
+import { Router } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
+import { OktaAuthService, UserClaims } from "@okta/okta-angular";
+import { Claim } from "./models/claim.model";
+import { BehaviorSubject } from "rxjs";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
-  title = 'app';
-  isAuthenticated: boolean;
-  constructor(public oktaAuth: OktaAuthService, private router: Router) {
-    this.oktaAuth.$authenticationState.subscribe(isAuthenticated => this.isAuthenticated = isAuthenticated);
-  }
+  isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+  private sidenavStatus: boolean = true;
+  private claims: Claim[] = [];
+
+  constructor(public oktaAuth: OktaAuthService, private router: Router) {}
   async ngOnInit() {
-    this.isAuthenticated = await this.oktaAuth.isAuthenticated();
+    this.oktaAuth
+      .isAuthenticated()
+      .then((value) => this.isAuthenticated.next(value));
   }
-  logout() {
-    this.oktaAuth.logout('/');
+
+  onOpenSidenav($event: boolean) {
+    this.sidenavStatus = $event;
   }
 }
