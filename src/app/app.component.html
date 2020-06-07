@@ -2,12 +2,12 @@
 
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav mode="side" [(opened)]="sidenavStatus">
-    <app-sidenav [isAuthenticated]="isAuthenticated"></app-sidenav>
+    <app-sidenav [isAuthenticated]="isAuthenticated" [ip]="ip"></app-sidenav>
   </mat-sidenav>
 
   <mat-sidenav-content>
     <mat-toolbar #toolbar>
-      <app-header [isAuthenticated]="isAuthenticated" [(sidenavStatus)]="sidenavStatus" style="inline-size: inherit"></app-header>
+      <app-header [isAuthenticated]="isAuthenticated" [(sidenavStatus)]="sidenavStatus" [weatherIcon]="weatherIcon" style="inline-size: inherit"></app-header>
     </mat-toolbar>
     <div id="main-content" class="ui text container">
       <router-outlet></router-outlet>

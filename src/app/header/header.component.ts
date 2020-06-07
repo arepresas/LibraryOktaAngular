@@ -12,6 +12,8 @@ export class HeaderComponent implements OnInit {
   isAuthenticated: BehaviorSubject<boolean>;
   @Input()
   sidenavStatus: boolean;
+  @Input()
+  weatherIcon: string;
   @Output()
   sidenavStatusChange = new EventEmitter<boolean>();
 

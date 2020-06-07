@@ -1,20 +1,10 @@
-/*!
- * Copyright (c) 2018, Okta, Inc. and/or its affiliates. All rights reserved.
- * The Okta software accompanied by this notice is provided pursuant to the Apache License, Version 2.0 (the "License.")
- *
- * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *
- * See the License for the specific language governing permissions and limitations under the License.
- */
-
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { OktaAuthService, UserClaims } from "@okta/okta-angular";
 import { Claim } from "./models/claim.model";
 import { BehaviorSubject } from "rxjs";
+import { LocationService } from "./services/location.service";
+import { Coord, Weather } from "./models/weather.model";
 
 @Component({
   selector: "app-root",
@@ -25,17 +15,36 @@ export class AppComponent implements OnInit {
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
+  ip: string;
+  weatherIcon: string;
   private sidenavStatus: boolean = true;
   private claims: Claim[] = [];
 
-  constructor(public oktaAuth: OktaAuthService, private router: Router) {}
+  constructor(
+    public oktaAuth: OktaAuthService,
+    private router: Router,
+    private locationService: LocationService
+  ) {}
   async ngOnInit() {
     this.oktaAuth
       .isAuthenticated()
       .then((value) => this.isAuthenticated.next(value));
-  }
 
-  onOpenSidenav($event: boolean) {
-    this.sidenavStatus = $event;
+    const geoLoc: Coord = await this.locationService.getPosition();
+
+    this.ip = ((await this.locationService
+      .getIPAddress()
+      .toPromise()) as any).ip;
+
+    const localWeather: Weather = await this.locationService
+      .getWeather(geoLoc)
+      .toPromise();
+
+    console.log(localWeather);
+
+    this.weatherIcon =
+      "http://openweathermap.org/img/wn/" +
+      localWeather.current.weather[0].icon +
+      "@2x.png";
   }
 }

@@ -1,9 +1,10 @@
 <div class="row">
-  <div class="col-6 left aligned text-white font-weight-bold">
+  <div class="col-6 left aligned text-white font-weight-bold" style="padding-top: 25px">
     <i class="fa fa-bars fa-3x" (click)="toggleSidebar()"></i>
     <span id="title" style="font-size: x-large; margin-left: 10px; cursor: pointer" routerLink="/">{{title}}</span>
   </div>
   <div class="col-6 text-right">
+    <img [src]="weatherIcon"/>
     <p-button icon="pi pi-sign-in" label="Login" *ngIf="!(isAuthenticated | async)" routerLink="/login"></p-button>
     <p-button icon="pi pi-sign-out" label="Logout" *ngIf="(isAuthenticated | async)" (click)="logout()"></p-button>
   </div>
