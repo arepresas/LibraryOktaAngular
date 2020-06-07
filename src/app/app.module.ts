@@ -21,7 +21,7 @@ import {
   OktaCallbackComponent,
 } from "@okta/okta-angular";
 
-import sampleConfig from "./app.config";
+import envConfig from "./app.config";
 
 const oktaConfig = Object.assign(
   {
@@ -30,7 +30,7 @@ const oktaConfig = Object.assign(
       router.navigate(["/login"]);
     },
   },
-  sampleConfig.oidc
+  envConfig.oidc
 );
 
 import { AppComponent } from "./app.component";
@@ -45,8 +45,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatIconModule } from "@angular/material/icon";
 import { MatDividerModule } from "@angular/material/divider";
 import { ButtonModule } from "primeng/button";
-import { SidenavComponent } from './sidenav/sidenav.component';
-import { HeaderComponent } from './header/header.component';
+import { SidenavComponent } from "./sidenav/sidenav.component";
+import { HeaderComponent } from "./header/header.component";
 const appRoutes: Routes = [
   {
     path: "",

@@ -11,6 +11,8 @@ import { Claim } from "../models/claim.model";
 export class SidenavComponent implements OnInit {
   @Input()
   isAuthenticated: BehaviorSubject<boolean>;
+  @Input()
+  ip: string;
   userName: string;
   userEmail: string;
 

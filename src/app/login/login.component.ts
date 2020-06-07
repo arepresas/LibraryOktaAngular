@@ -12,7 +12,7 @@
 
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import * as OktaSignIn from "@okta/okta-signin-widget";
-import sampleConfig from "../app.config";
+import envConfig from "../app.config";
 
 @Component({
   selector: "app-login",
@@ -28,9 +28,9 @@ export class LoginComponent implements OnInit, OnDestroy {
        * needs to be configured with the base URL for your Okta Org. Here
        * we derive it from the given issuer for convenience.
        */
-      baseUrl: sampleConfig.oidc.issuer.split("/oauth2")[0],
-      clientId: sampleConfig.oidc.clientId,
-      redirectUri: sampleConfig.oidc.redirectUri,
+      baseUrl: envConfig.oidc.issuer.split("/oauth2")[0],
+      clientId: envConfig.oidc.clientId,
+      redirectUri: envConfig.oidc.redirectUri,
       logo: "/assets/angular.svg",
       i18n: {
         en: {
@@ -40,9 +40,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       authParams: {
         pkce: true,
         responseMode: "query",
-        issuer: sampleConfig.oidc.issuer,
+        issuer: envConfig.oidc.issuer,
         display: "page",
-        scopes: sampleConfig.oidc.scopes,
+        scopes: envConfig.oidc.scopes,
       },
     });
   }
